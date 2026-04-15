@@ -1,4 +1,4 @@
-function renderProduk(res) {
+window.renderProduk = function(res) {
     if (!res || !res.data) return;
 
     STATE.produk.page = res.page;
