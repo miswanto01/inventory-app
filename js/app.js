@@ -2,18 +2,26 @@ initFromURL();
 loadProduk();
 setTimeout(loadTransaksi, 1000);
 
-document.getElementById("search").addEventListener("keyup", function () {
+document.addEventListener("DOMContentLoaded", function () {
 
-    STATE.produk.search = this.value;
-    STATE.produk.page = 1;
+  const searchInput = document.getElementById("search");
 
-    updateURL();
+  if (searchInput) {
+    searchInput.addEventListener("keyup", function () {
 
-    clearTimeout(timeout);
+      STATE.produk.search = this.value;
+      STATE.produk.page = 1;
 
-    timeout = setTimeout(() => {
-        loadData();
-    }, 300);
+      updateURL();
+      loadProduk();
+
+    });
+  }
+
+  // load awal
+  loadProduk();
+  loadTransaksi();
+
 });
 
 
