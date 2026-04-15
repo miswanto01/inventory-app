@@ -13,7 +13,7 @@ window.renderProduk = function(res) {
     renderPaginationProduk(res.total);
 }
 
-function renderTable() {
+window.renderTable = function() {
     const tbody = document.getElementById("tbody");
 
     let html = "";
