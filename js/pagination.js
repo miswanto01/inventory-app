@@ -1,4 +1,4 @@
-function renderPaginationProduk(total) {
+window.renderPaginationProduk = function(total) {
     const totalPage = Math.ceil(total / STATE.produk.limit);
 
     let html = "";
