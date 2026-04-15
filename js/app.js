@@ -2,14 +2,20 @@ initFromURL();
 loadProduk();
 setTimeout(loadTransaksi, 1000);
 
-document.getElementById("search").addEventListener("keyup", function () {
-    STATE.produk.search = this.value;
-    STATE.produk.page = 1;
+document.addEventListener("DOMContentLoaded", function () {
+  const searchInput = document.getElementById("search");
+  if (searchInput) {
+    searchInput.addEventListener("keyup", function () {
+      STATE.produk.search = this.value;
+      STATE.produk.page = 1;
+      updateURL();
+      loadProduk();
+    });
+  }
+  // load awal
+  loadProduk();
+  loadTransaksi();
 
-    updateURL();
-
-    clearTimeout(window.searchTimer);
-    window.searchTimer = setTimeout(loadProduk, 300);
 });
 
 function quickFilter(type) {
