@@ -1,4 +1,4 @@
-function addToCart(kode) {
+window.addToCart = function(kode) {
     const item = DATA.find(i => i.kode == kode);
     if (!item) return;
 
