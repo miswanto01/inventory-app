@@ -1,4 +1,4 @@
-function renderTransaksi(res) {
+window.renderTransaksi = function(res) {
 
     const data = res.data || []; // 🔥 penting
 
