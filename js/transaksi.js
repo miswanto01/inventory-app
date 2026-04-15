@@ -17,7 +17,7 @@ window.renderTransaksi = function(res) {
 
     const reversed = [...data].reverse(); // 🔥 FIX AMAN
 
-    const start = (currentPageTransaksi - 1) * rowsPerPage;
+    const start = (STATE.transaksi.page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
     const paginated = reversed.slice(start, end);
