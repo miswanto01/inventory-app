@@ -14,3 +14,5 @@ const CACHE = {};
 let DATA = [];
 let CART = [];
 let currentScript = null;
+let timeout = null;
+let requestId = 0;

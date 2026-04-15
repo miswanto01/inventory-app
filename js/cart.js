@@ -1,4 +1,4 @@
-window.addToCart = function(kode) {
+function addToCart(kode) {
     const item = DATA.find(i => i.kode == kode);
     if (!item) return;
 
@@ -61,4 +61,52 @@ function removeItem(i) {
 function clearCart() {
     CART = [];
     renderCart();
+}
+
+function checkout() {
+
+    if (CART.length === 0) {
+        alert("Keranjang kosong ❌");
+        return;
+    }
+
+    // 🔥 CETAK PDF
+    cetakPDF();
+
+    // 🔥 SIMPAN KE SERVER
+    CART.forEach(item => {
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = CONFIG.API_URL;
+        form.target = "hidden_iframe";
+
+        const data = {
+            action: "jual",
+            kode: item.kode,
+            qty: item.qty
+        };
+
+        for (let key in data) {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = data[key];
+            form.appendChild(input);
+        }
+
+        document.body.appendChild(form);
+        form.submit();
+
+        setTimeout(() => form.remove(), 500);
+    });
+
+    setTimeout(() => {
+        alert("✔ Checkout berhasil 🚀");
+
+        CART = [];
+        renderCart();
+        refreshData();
+        loadTransaksi();
+    }, 1000);
 }

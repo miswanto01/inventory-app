@@ -11,3 +11,80 @@ document.getElementById("search").addEventListener("keyup", function () {
     clearTimeout(window.searchTimer);
     window.searchTimer = setTimeout(loadProduk, 300);
 });
+
+function quickFilter(type) {
+    currentFilter = type;
+    currentPageProduk = 1;
+    loadData();
+}
+
+function openModal() {
+    document.getElementById("modal").style.display = "flex";
+}
+
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+}
+
+function safeFind(kode) {
+    return DATA.find(i =>
+        String(i.kode || "").trim() === String(kode || "").trim()
+    );
+}
+
+function openSellModal(kode) {
+
+    const item = safeFind(kode);
+
+    if (!item) {
+        alert("Barang tidak ditemukan ❌");
+        return;
+    }
+
+    sellKode = kode;
+    sellHarga = Number(item.harga_jual || 0);
+
+    document.getElementById("sellKode").innerText = "Kode: " + kode;
+    document.getElementById("sellQty").value = 1;
+
+    updateTotal();
+
+    document.getElementById("sellModal").style.display = "flex";
+}
+
+function closeSellModal() {
+    document.getElementById("sellModal").style.display = "none";
+}
+
+function changeQty(val) {
+
+    let input = document.getElementById("sellQty");
+
+    let current = Number(input.value || 1);
+    current += val;
+
+    if (current < 1) current = 1;
+
+    input.value = current;
+
+    updateTotal(); // 🔥 refresh total
+}
+
+function updateTotal() {
+    const qty = Number(document.getElementById("sellQty").value || 0);
+    const total = qty * sellHarga;
+    document.getElementById("totalHarga").innerText =
+        "Total: " + total;
+}
+
+document.addEventListener("keydown", function (e) {
+    if (e.key === "Enter") {
+
+        const active = document.activeElement;
+
+        if (active && active.id.startsWith("qty_")) {
+            const kode = active.id.replace("qty_", "");
+            addToCart(kode);
+        }
+    }
+});
